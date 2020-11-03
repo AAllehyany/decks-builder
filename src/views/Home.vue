@@ -1,18 +1,22 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="flex p-10">
+    <div class="flex justify-center container mx-auto">
+    <GameTitle v-for="game in games" :game="game" :key="game.id" class="mr-2"/>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import GameTitle from '../components/GameTitle';
 
 export default {
-  name: 'Home',
   components: {
-    HelloWorld
+    GameTitle,
+  },
+  setup() {
+    return {
+      games: [{title: 'Weiss Scharz', id: 1}, {title: 'Yu-Gi-Oh!', id: 2}, {title: 'Digimon TCG', id: 3}]
+    }
   }
 }
 </script>
