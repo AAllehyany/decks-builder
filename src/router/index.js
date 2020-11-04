@@ -18,7 +18,14 @@ const routes = [
   {
     path: '/create',
     name: 'CreateDeck',
-    component: () => import('../views/DeckBuilder.vue')
+    component: () => import('../views/DeckBuilder.vue'),
+    props: route => ({game: route.query.c})
+  },
+  {
+    path: '/view/:code',
+    name: 'ViewDeck',
+    component: () => import('../views/DeckView.vue'),
+    props: true
   }
 ]
 

@@ -36,3 +36,7 @@ export const validateWeissDeck = (deckList)=> {
 export const saveDeck = async (deck) => {
     return axios.post(`${URL}/save`, deck);
 }
+
+export const loadDeck = async(code) => {
+    return axios.get(`${URL}/view/${code}`);
+}

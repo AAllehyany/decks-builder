@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <header class="p-2 flex bg-blue-300">
+    <header class="p-2 flex shadow-md mb-3">
       <div class="w-full flex mx-auto justify-between items-center">
         <div>
-          <h1 class="text-gray-800 text-lg uppercase font-bold">deck builder</h1>
+          <h1 class="text-gray-800 text-base uppercase font-bold">deck builder</h1>
         </div>
         <div>
           <input type="search" 

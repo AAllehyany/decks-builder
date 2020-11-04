@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import {loadAllCards} from '../services/card-service';
-import {validAdd, saveDeck} from '../services/validation-service';
+import {validAdd, saveDeck, loadDeck} from '../services/validation-service';
 
 export default createStore({
     state: {
@@ -10,6 +10,7 @@ export default createStore({
         errorMsgs: {},
         currentDeck: [],
         cardError: {},
+        deckInfo: {},
     },
     mutations: {
         cardsLoaded(state, payload) {
@@ -33,12 +34,16 @@ export default createStore({
 
         deckSaved(state) {
             state.currentDeck = [];
+        },
+
+        deckLoaded(state, deck) {
+            state.deckInfo = deck;
         }
     },
     actions: {
-        async loadCards({commit}) {
+        async loadCards({commit}, query) {
             try {
-                const cards = await loadAllCards();
+                const cards = await loadAllCards(query);
                 commit('cardsLoaded', cards.data);
             } catch(e) {
                 console.log(e);
@@ -63,6 +68,15 @@ export default createStore({
                 const resp = await saveDeck(data);
                 commit('deckSaved');
                 console.log(resp.data);
+            } catch(e) {
+                console.log(e);
+            }
+        },
+
+        async loadDeckCards({commit}, code) {
+            try {
+                const cards = await loadDeck(code);
+                commit('deckLoaded', cards.data);
             } catch(e) {
                 console.log(e);
             }

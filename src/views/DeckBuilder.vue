@@ -1,10 +1,10 @@
 <template>
     <div class="flex container mx-auto flex-wrap justify-left lg:flex-row flex-col-reverse">
         <div class="lg:w-3/5 flex flex-col p-1">
-            <div class="w-full bg-yellow-300 mb-1 p-2 flex justify-between rounded-md">
+            <div class="w-full bg-green-300 mb-1 p-2 flex justify-between rounded-md">
                 <span class="text-white font-bold text-lg py-2 px-5 bg-gray-600 mr-1">{{deck.length}} / 50</span>
                 <div class="flex">
-                    <input type="text" v-model="deckTitle">
+                    <input type="text" v-model="deckTitle" placeholder="enter deck name...">
                     <button type="submit" 
                         class="w-24 text-base font-bold px-4 py-2 bg-green-500 text-white hover:bg-green-600 focus:bg-green-900 focus:outline-none"
                         @click="saveDeck">SAVE</button>
@@ -20,25 +20,29 @@
 </template>
 
 <script>
-import {computed, onMounted, ref} from 'vue';
+import {computed, onMounted, ref, toRefs} from 'vue';
 import CardList from '../components/CardList';
 import CardSearch from '../components/CardSearch';
 import {useStore} from 'vuex';
 
 
 export default {
+    props: {
+        game: String
+    },
     components: {
         CardList,
         CardSearch
     },
-    setup() {
+    setup(props) {
+        const {game} = toRefs(props);
         const store = useStore();
         const cards = computed(() => store.state.searchResults);
         const deck = computed(() => store.state.currentDeck);
         const deckTitle = ref('');
 
         onMounted(async () => {
-            await store.dispatch('loadCards');
+            await store.dispatch('loadCards', `game=${game.value}`);
         });
 
         const saveDeck = async () => {
