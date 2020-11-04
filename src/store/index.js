@@ -11,6 +11,7 @@ export default createStore({
         currentDeck: [],
         cardError: {},
         deckInfo: {},
+        deckCode: '',
     },
     mutations: {
         cardsLoaded(state, payload) {
@@ -32,8 +33,9 @@ export default createStore({
             }
         },
 
-        deckSaved(state) {
+        deckSaved(state, payload) {
             state.currentDeck = [];
+            state.deckCode = payload.code;
         },
 
         deckLoaded(state, deck) {
@@ -66,8 +68,7 @@ export default createStore({
                     cards: state.currentDeck.map(c => c._id)
                 }
                 const resp = await saveDeck(data);
-                commit('deckSaved');
-                console.log(resp.data);
+                commit('deckSaved', resp.data);
             } catch(e) {
                 console.log(e);
             }

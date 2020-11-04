@@ -15,7 +15,7 @@ export default {
   },
   setup() {
     return {
-      games: [{title: 'Weiss Scharz', id: 1}, {title: 'Yu-Gi-Oh!', id: 2}, {title: 'Digimon TCG', id: 3}]
+      games: [{title: 'Weiss Scharz', id: 1, code: 'WS'}, {title: 'Yu-Gi-Oh!', id: 2, code: 'YGO'}, {title: 'Digimon TCG', id: 3, code: 'DIG'}]
     }
   }
 }
