@@ -1,6 +1,12 @@
 <template>
     <div>
-        <Card class="w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3" v-for="card in cards" :card="card" :key="card._id" :controls="cardControls" />
+        <Card 
+            :class="contentDisplay" 
+            v-for="card in cards" 
+            :card="card" 
+            :key="card._id" 
+            :controls="cardControls"
+            :copies="getCopies(card)" />
     </div>
 </template>
 <script>
@@ -9,7 +15,9 @@ export default {
     components: {Card},
     props: {
         cards: Array,
-        cardControls: Boolean
+        cardControls: Boolean,
+        contentDisplay: String,
+        getCopies: Function
     },
 }
 </script>
