@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col px-1">
 
-        <div class="w-full bg-teal-800 p-2 rounded">
-            <h3 class="text-base text-white font-bold uppercase">card search</h3>
+        <div class="w-full border-l-8 border-r-8 border-teal-800 p-2 rounded">
+            <h3 class="text-lg text-teal-800 font-bold uppercase">card search</h3>
         </div>
-        <form action="POST" class="w-full flex items-center p-2 flex-col">
+        <form action="POST" class="w-full flex items-center p-2 flex-col ">
             <div class="mb-4 w-full flex items-center">
                 <label for="name" class="text-gray-800 text-sm font-normal w-1/4">Name</label>
                 <input 

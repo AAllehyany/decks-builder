@@ -1,22 +1,19 @@
 <template>
     <div class="flex container mx-auto flex-wrap justify-left lg:flex-row flex-col-reverse">
         <div class="lg:w-3/5 flex flex-col p-1">
+            <div class="flex w-full border-l-8 border-r-8 border-blue-900 p-2 mb-1 justify-between rounded items-center">
+                <h3 class="text-lg text-blue-900 font-normal uppercase">deck: <b class="text-green-500">{{deck.length}}</b> / 50</h3>
+                <div class="flex justify-between p-1 border-b border-blue-800">
+                    <input v-model="deckTitle" type="text" class="appearance-none " placeholder="Enter deck name...">
+                    <button @click="saveDeck" class="text-base text-white block w-1/3 bg-white bg-green-400 hover:bg-green-500 p-2 rounded focus:outline-none">search</button>
+                </div>
+            </div>
             <CardList 
                 content-display="w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/4" 
                 card-controls="" 
                 :cards="cards.slice(0,12)" 
                 class=" w-full flex flex-wrap overflow-x-hidden overflow-y-auto lg:search-results"
                 :get-copies="getCopies"/>
-            <div class="w-full p-1 flex justify-between rounded-md">
-                <span class="text-white font-bold text-lg py-2 px-5 bg-gray-600 mr-1">{{deck.length}} / 50</span>
-                <div class="flex">
-                    <input type="text" v-model="deckTitle" placeholder="enter deck name...">
-                    <button type="submit" 
-                        class="w-24 text-base font-bold px-4 py-2 bg-green-500 text-white hover:bg-green-600 focus:bg-green-900 focus:outline-none"
-                        @click="saveDeck">SAVE</button>
-                </div>
-
-            </div>
         </div>
         <div class="w-full lg:w-1/5 flex flex-col p-1">
             <CardSearch />
@@ -79,7 +76,7 @@ export default {
 @layer utilities {
     @responsive {
         .search-results {
-            height: 50rem;
+            height: 550px;
             scrollbar-width: 10px;
             scrollbar-color: #2f3030 transparent;
         }
