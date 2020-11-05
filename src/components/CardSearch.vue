@@ -1,6 +1,61 @@
 <template>
-    <div class="flex p-2">
-        <form class="w-full flex justify-between items-center flex-col" >
+    <div class="flex flex-col px-1">
+
+        <div class="w-full bg-teal-800 p-2 rounded">
+            <h3 class="text-base text-white font-bold uppercase">card search</h3>
+        </div>
+        <form action="POST" class="w-full flex items-center p-2 flex-col">
+            <div class="mb-4 w-full flex items-center">
+                <label for="name" class="text-gray-800 text-sm font-normal w-1/4">Name</label>
+                <input 
+                    type="text" 
+                    class="rounded w-full appearance-none text-gray-800 text-sm py-1 px-3 border border-1 border-teal-400 focus:outline-none" id="name">
+            </div>
+            <div class="mb-4 w-full flex items-center">
+                <label for="card_type" class="text-gray-800 text-sm font-normal w-1/4">Type</label>
+                <select id="card_type" class="text-sm block w-full bg-white border border-teal-400 hover:border-teal-500 px-3 py-1 rounded focus:outline-none">
+                    <option value="">choose type..</option>
+                    <option value="0">Character</option>
+                    <option value="1">Event</option>
+                    <option value="2">Climax</option>
+                </select>
+            </div>
+            <div class="mb-4 w-full flex items-center">
+                <label for="min_cost " class="text-gray-800 text-sm font-normal w-1/4">Cost</label>
+                <div class="flex space-x-2 w-full justify-end items-center">
+                    <input type="text" class="text-sm block w-1/3 bg-white border border-teal-400 hover:border-teal-500 px-1 py-1 rounded focus:outline-none"
+                    placeholder="min..." id="min_cost">
+                    <span class="text-gray-800 text-sm font-normal mb-2">-</span>
+                    <input type="text" class="text-sm block w-1/3 bg-white border border-teal-400 hover:border-teal-500 px-1 py-1 rounded focus:outline-none"
+                    placeholder="max...">
+                </div>
+            </div>
+            <div class="mb-4 w-full flex items-center">
+                <label for="min_power " class="text-gray-800 text-sm font-normal w-1/4">Power</label>
+                <div class="flex space-x-2 w-full justify-end items-center">
+                    <input type="text" class="text-sm block w-1/3 bg-white border border-teal-400 hover:border-teal-500 px-1 py-1 rounded focus:outline-none"
+                    placeholder="min..." id="min_power">
+                    <span class="text-gray-800 text-sm font-normal mb-2">-</span>
+                    <input type="text" class="text-sm block w-1/3 bg-white border border-teal-400 hover:border-teal-500 px-1 py-1 rounded focus:outline-none"
+                    placeholder="max...">
+                </div>
+            </div>
+            <div class="mb-4 w-full flex items-center">
+                <label for="min_level " class="text-gray-800 text-sm font-normal w-1/4">Level</label>
+                <div class="flex space-x-2 w-full justify-end items-center">
+                    <input type="text" class="text-sm block w-1/3 bg-white border border-teal-400 hover:border-teal-500 px-1 py-1 rounded focus:outline-none"
+                    placeholder="min..." id="min_level">
+                    <span class="text-gray-800 text-sm font-normal mb-2">-</span>
+                    <input type="text" class="text-sm block w-1/3 bg-white border border-teal-400 hover:border-teal-500 px-1 py-1 rounded focus:outline-none"
+                    placeholder="max...">
+                </div>
+            </div>
+            <div class="flex justify-end w-full">
+                <button class="text-sm block w-1/3 bg-white bg-teal-400 hover:bg-teal-500 px-1 py-1 rounded focus:outline-none">search</button>
+            </div>
+        </form>
+
+        <!-- <form class="w-full flex justify-between items-center flex-col" >
             <div class="flex flex-wrap w-full flex-col flex-row justify-center md:justify-start">
                 <div class="mb-1">
                     <label for="searchName" class="text-base p-1 text-gray-800">Name: </label>
@@ -38,6 +93,6 @@
                 </div>
             </div>
             <button type="submit" class="w-full  text-base font-bold uppercase px-4 py-2 bg-gray-500 text-white hover:bg-gray-600 focus:bg-green-500 focus:outline-none">Filter</button>
-        </form>
+        </form> -->
     </div>
 </template>

@@ -2,9 +2,9 @@
     <div class="flex container mx-auto flex-wrap justify-left lg:flex-row flex-col-reverse">
         <div class="lg:w-3/5 flex flex-col p-1">
             <CardList 
-                content-display="w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3" 
+                content-display="w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/4" 
                 card-controls="" 
-                :cards="cards" 
+                :cards="cards.slice(0,12)" 
                 class=" w-full flex flex-wrap overflow-x-hidden overflow-y-auto lg:search-results"
                 :get-copies="getCopies"/>
             <div class="w-full p-1 flex justify-between rounded-md">
@@ -18,7 +18,7 @@
 
             </div>
         </div>
-        <div class="w-full lg:w-2/5 flex flex-col p-1">
+        <div class="w-full lg:w-1/5 flex flex-col p-1">
             <CardSearch />
         </div>
     </div>
