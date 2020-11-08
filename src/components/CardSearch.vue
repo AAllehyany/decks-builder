@@ -1,9 +1,6 @@
 <template>
-    <div class="flex h-16 items-center w-full bg-gray-200">
-        <!-- <div class="w-full border-l-8 border-r-8 border-teal-800 p-2 rounded">
-            <h3 class="text-lg text-teal-800 font-bold uppercase">card search</h3>
-        </div> -->
-        <form @submit="onSubmit" action="POST" class="w-full flex items-center p-2 ">
+    <div class="flex h-16 items-center w-full bg-gray-200 justify-center">
+        <form @submit="onSubmit" action="POST" class="flex justify-center p-2 ">
             <div class="mr-4 flex items-center">
                 <input 
                     placeholder="name"
