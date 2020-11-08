@@ -1,12 +1,13 @@
 import axios from 'axios';
-const URL = 'http://localhost:3000/weiss-cards';
+const URL = 'http://localhost:3000/cards';
 
 
 export const loadAllCards = async (query) => {
-    return axios.get(`${URL}?${query}`);
+    return axios.get(`${URL}`,{
+        params: query
+    });
 }
 
 export const searchForCards = async (filters) => {
-    console.log(filters);
-    // ... filter and sort/etc
+    return axios.get(`${URL}?${filters}`)
 }
