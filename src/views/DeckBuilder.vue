@@ -1,30 +1,25 @@
 <template>
-    <div class="flex container mx-auto flex-wrap justify-left p-2">
+    <div class="flex mx-auto flex-wrap justify-center p-2">
+        <CardDetails v-if="previewCard !== null"/>
         <div class="w-full flex sticky top-0 z-10 mb-2">
             <CardSearch class="rounded-lg"/>
         </div>
-            <!-- <div class="flex w-full bg-white border-l-8 border-r-8 border-blue-900 p-2 mb-1 justify-between rounded items-center sticky top-0 z-50">
-                <h3 class="text-lg text-blue-900 font-normal uppercase">deck: <b class="text-green-500">{{deck.length}}</b> / 50</h3>
-                <div class="flex justify-between p-1 border-b border-blue-800">
-                    <input v-model="deckTitle" type="text" 
-                    class="w-32 text-base p-1 rounded focus:outline-none" placeholder="Enter deck name...">
-                    <button @click="saveDeck" class="text-base text-white block w-1/3 bg-white bg-green-400 hover:bg-green-500 px-3 py-1 rounded focus:outline-none">
-                        save
-                    </button>
-                </div>
-            </div>
-            <div class="w-full flex flex-wrap overflow-x-hidden overflow-y-auto lg:search-results lg:max-w-screen-md justify-center" v-if="cards.length === 0">
-                <span class="text-lg text-red-800 font-bold uppercase p-8">No results </span>
-            </div> -->
-        <div class="flex w-full">
+        <div class="flex w-full container mx-auto">
             <CardList 
                 content-display="card m-5 lg:lg-card bg-black rounded-lg" 
                 card-controls="" 
-                :cards="cards" 
+                :cards="[]" 
                 class="w-full flex flex-wrap lg:w-3/4 p-2"
                 :get-copies="getCopies"
             />
-            <div class="hidden lg:block lg:w-1/4 h-64 sticky top-custom ">
+            <div class="hidden lg:block lg:w-1/4 h-64 sticky top-custom flex flex-col ">
+                <div class="flex justify-between p-1 bg-gray-200 p-2 mb-2 rounded-lg">
+                    <input v-model="deckTitle" type="text" 
+                    class="text-base p-1 rounded focus:outline-none" placeholder="Enter deck name...">
+                    <button @click="saveDeck" class="text-base text-white block bg-white bg-green-400 hover:bg-green-500 px-3 py-1 rounded focus:outline-none">
+                        save
+                    </button>
+                </div>
                 <DeckList :deck="deck" class="w-full  "/>
             </div>
         </div>
@@ -37,6 +32,7 @@ import {computed, onBeforeMount, ref, toRefs} from 'vue';
 import CardList from '../components/CardList';
 import CardSearch from '../components/CardSearch';
 import DeckList from '../components/DeckList'
+import CardDetails from '../components/CardDetails';
 import {useStore} from 'vuex';
 import {useRouter} from 'vue-router';
 
@@ -47,7 +43,8 @@ export default {
     components: {
         CardList,
         DeckList,
-        CardSearch
+        CardSearch,
+        CardDetails
     },
     setup(props) {
         const {game} = toRefs(props);
@@ -57,6 +54,7 @@ export default {
         const deck = computed(() => store.state.currentDeck);
         const deckTitle = ref('');
         const loading = ref(false);
+        const previewCard = computed(() => store.state.previewCard);
 
         onBeforeMount(async () => {
             loading.value = true;
@@ -92,7 +90,8 @@ export default {
             saveDeck,
             deckTitle,
             getCopies,
-            loading
+            loading,
+            previewCard,
         }
   }
 }
