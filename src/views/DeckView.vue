@@ -1,12 +1,10 @@
 <template>
-    <div class="container flex mx-auto w-3/5">
+    <div class="container flex mx-auto w-full justify-start">
         <CardList 
-            :cards="makeUnique(deck.cards)" class="w-full flex flex-wrap" 
-            content-display="w-1/2 sm:w-1/3 md:w-1/5 lg:w-1/6"
+            :cards="makeUnique(deck.cards)" class="deck-container flex flex-wrap justify-start lg:lg-deck-container lg:bg-gray-200" 
+            content-display="sm-card lg:lg-card"
             :get-copies="getCopies"
         />
-        <div class="w-1/5">
-        </div>
     </div>
 </template>
 
@@ -52,3 +50,30 @@ export default {
     }
 }
 </script>
+<style>
+@layer utilities {
+    @responsive {
+        .deck-container {
+            width: 100%;
+        }
+
+        .lg-deck-container {
+            width: 910px;
+        }
+
+        .card {
+            width: 200px;
+            height: 279px;
+        }
+
+        .lg-card {
+           width: 150px;
+            height: 209.25px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+
+    }
+}
+</style>
