@@ -1,6 +1,6 @@
 <template>
     <div class="group relative">
-        <img :src="card.image_url" class="transition duration-100 w-full h-full rounded-lg transform group-hover:scale-102 hover:scale-102"  @click="toggleControls"/>
+        <img :src="card.image_url" class="transition duration-100 w-full h-full rounded-lg transform group-hover:scale-102 hover:scale-102"  @click="previewCard"/>
         <div v-if="state && controls" class="absolute flex justify-between w-full bottom-0 left-0 py-1 px-3 items-center">
             <div class="flex justify-between">
                 <span class="bg-white p-0 mr-1 h-8 w-8 rounded-full">
@@ -30,6 +30,7 @@ export default {
         card: Object,
         controls: Boolean,
         copies: Number,
+        previewAction: Function
     },
     setup(props) {
         const store = useStore();
@@ -54,11 +55,16 @@ export default {
             store.dispatch('addCardToDeck', card.value);
         }
 
+        function previewCard() {
+            store.commit('setPreviewCard', card.value);
+        }
+
         return {
             state,
             toggleControls,
             removeCopy,
-            addCopy
+            addCopy,
+            previewCard
         }
     }
 }
