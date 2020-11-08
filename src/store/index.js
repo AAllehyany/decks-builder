@@ -12,6 +12,7 @@ export default createStore({
         cardError: {},
         deckInfo: {},
         deckCode: '',
+        previewCard: null,
     },
     mutations: {
         cardsLoaded(state, payload) {
@@ -40,6 +41,10 @@ export default createStore({
 
         deckLoaded(state, deck) {
             state.deckInfo = deck;
+        },
+
+        setPreviewCard(state, card) {
+            state.previewCard = card;
         }
     },
     actions: {
