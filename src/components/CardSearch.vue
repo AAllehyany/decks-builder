@@ -1,21 +1,21 @@
 <template>
-    <div class="flex h-16 items-center w-full bg-gray-200 justify-center">
-        <form @submit="onSubmit" action="POST" class="flex justify-center p-2 ">
-            <div class="mr-4 flex items-center">
+    <div class="flex lg:h-16 items-center w-full bg-gray-200 lg:justify-center">
+        <form @submit="onSubmit" action="POST" class="flex flex-col justify-start lg:justify-center p-2 lg:flex-row ">
+            <div class="mb-4 lg:mb-0 lg:mr-4 flex items-center">
                 <input 
                     placeholder="name"
                     v-model="form.name"
                     type="text" 
                     class="rounded appearance-none text-gray-800 text-sm py-1 px-3 border border-1 border-teal-400 focus:outline-none" id="name">
             </div>
-            <div class="mr-4 flex items-center">
+            <div class="mb-4 lg:mb-0 lg:mr-4 flex items-center">
                 <select v-model="form.card_type" id="card_type" class="text-sm w-20  block bg-white border border-teal-400 hover:border-teal-500 px-3 py-1 rounded focus:outline-none">
                     <option value="">choose type..</option>
                     <option value="0">Character</option>
                     <option value="1">Event</option>
                     <option value="2">Climax</option>
                 </select>
-            </div><div class="mr-4 flex items-center">
+            </div><div class="mb-4 lg:mb-0 lg:mr-4 flex items-center">
                 <select v-model="form.color" id="card_color" class="text-sm w-20 block bg-white border border-teal-400 hover:border-teal-500 px-3 py-1 rounded focus:outline-none">
                     <option value="">choose color..</option>
                     <option value="1">Yellow</option>
@@ -24,7 +24,7 @@
                     <option value="4">Blue</option>
                 </select>
             </div>
-            <div class="mr-4 flex items-center">
+            <div class="mb-4 lg:mb-0 lg:mr-4 flex items-center">
                 <label for="min_power " class="text-gray-800 text-sm font-normal mr-1">Cost</label>
                 <div class="flex space-x-2 justify-end items-center">
                     <input v-model="form.min_cost" type="text" class="text-sm block w-10 bg-white border border-teal-400 hover:border-teal-500 px-1 py-1 rounded focus:outline-none"
@@ -34,7 +34,7 @@
                     placeholder="max...">
                 </div>
             </div>
-            <div class="mr-4 flex items-center">
+            <div class="mb-4 lg:mb-0 lg:mr-4 flex items-center">
                 <label for="min_power " class="text-gray-800 text-sm font-normal mr-1">Power</label>
                 <div class="flex space-x-2 justify-end items-center">
                     <input v-model="form.min_power" type="text" class="text-sm block w-10 bg-white border border-teal-400 hover:border-teal-500 px-1 py-1 rounded focus:outline-none"
@@ -44,7 +44,7 @@
                     placeholder="max...">
                 </div>
             </div>
-            <div class="mr-4 flex items-center">
+            <div class="mb-4 lg:mb-0 lg:mr-4 flex items-center">
                 <label for="min_level " class="text-gray-800 text-sm font-normal mr-1">Level</label>
                 <div class="flex space-x-2 justify-end items-center">
                     <input v-model="form.min_level" type="text" class="text-sm block w-10 bg-white border border-teal-400 hover:border-teal-500 px-1 py-1 rounded focus:outline-none"
