@@ -1,7 +1,8 @@
 <template>
     <div class="container flex mx-auto w-full flex-col justify-start">
-        <div class="w-full flex mb-2">
+        <div class="w-full flex flex-col mb-2 justify-center">
             <h3 class="text-lg font-bold p-3">{{deck.name}}</h3>
+            <p class="text-base font-bold px-5">Code: {{deck.code}}</p>
         </div>
         <CardDetails v-if="previewCard !== null" />
         <DeckCardList 
