@@ -14,10 +14,15 @@ export default createStore({
         deckCode: '',
         previewCard: null,
         loading: false,
+        canLoadMore: true,
     },
     mutations: {
         cardsLoaded(state, payload) {
             state.searchResults = payload;
+        },
+
+        addCardsToResult(state, payload) {
+            state.searchResults.push(...payload);
         },
 
         errorState(state, payload) {
@@ -50,14 +55,35 @@ export default createStore({
 
         setLoading(state, value) {
             state.loading = value;
+        },
+
+        setCanLoad(state, value) {
+            state.canLoadMore = value;
         }
+
     },
     actions: {
         async loadCards({commit}, query) {
             try {
                 commit('setLoading', true);
+                commit('setCanLoad', true);
                 const cards = await loadAllCards(query);
                 commit('cardsLoaded', cards.data);
+            } catch(e) {
+                console.log(e);
+            } finally {
+                commit('setLoading', false);
+            }
+        },
+        async loadMore({commit}, query) {
+            try {
+                commit('setLoading', true);
+                const cards = await loadAllCards(query);
+                if(cards.data.length < 1) {
+                    commit('setCanLoad', false)
+                } else {
+                    commit('addCardsToResult', cards.data);
+                }
             } catch(e) {
                 console.log(e);
             } finally {
