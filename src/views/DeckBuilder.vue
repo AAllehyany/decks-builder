@@ -1,15 +1,15 @@
 <template>
     <div class="flex mx-auto flex-wrap justify-center p-2">
-        <CardDetails v-if="previewCard !== null"/>
-        <div class="w-full flex sticky top-0 z-10 mb-2">
-            <CardSearch class="rounded-lg"/>
+        <CardDetails v-if="previewCard !== null" />
+        <div class="hidden lg:block w-full flex sticky top-0 z-10 mb-2">
+            <CardSearch class="rounded-lg" :on-search="searchCards" :search-query="searchQuery" />
         </div>
         <div class="flex w-full container mx-auto">
             <CardList 
-                content-display="card m-5 lg:lg-card bg-black rounded-lg" 
+                content-display="lg-card m-5 lg:lg-card bg-black rounded-lg" 
                 card-controls="" 
-                :cards="[]" 
-                class="w-full flex flex-wrap lg:w-3/4 p-2"
+                :cards="cards" 
+                class="w-full flex flex-wrap justify-center lg:justify-left lg:w-3/4 p-2"
                 :get-copies="getCopies"
             />
             <div class="hidden lg:block lg:w-1/4 h-64 sticky top-custom flex flex-col ">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {computed, onBeforeMount, ref, toRefs} from 'vue';
+import {computed, onBeforeMount, reactive, ref, toRefs} from 'vue';
 import CardList from '../components/CardList';
 import CardSearch from '../components/CardSearch';
 import DeckList from '../components/DeckList'
@@ -55,13 +55,15 @@ export default {
         const deckTitle = ref('');
         const loading = ref(false);
         const previewCard = computed(() => store.state.previewCard);
+        const currentPage = ref(0);
+        const searchQuery = reactive({});
 
         onBeforeMount(async () => {
             loading.value = true;
             try {
                 await store.dispatch('loadCards', {
                     game: game.value,
-                    skip: 0,
+                    skip: currentPage.value,
                 });
             } catch(e) {
                 console.log(e);
@@ -84,6 +86,18 @@ export default {
             return store.state.currentDeck.filter(c => c._id === card._id).length
         }
 
+        const searchCards = async () => {
+            loading.value = true;
+            try {
+                await store.dispatch('loadCards', searchQuery);
+                currentPage.value = 0;
+            } catch(e) {
+                console.log(e);
+            } finally {
+                loading.value = false;
+            }
+        }
+
         return {
             cards,
             deck,
@@ -92,6 +106,8 @@ export default {
             getCopies,
             loading,
             previewCard,
+            searchCards,
+            searchQuery
         }
   }
 }
