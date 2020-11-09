@@ -13,6 +13,7 @@ export default createStore({
         deckInfo: {},
         deckCode: '',
         previewCard: null,
+        loading: false,
     },
     mutations: {
         cardsLoaded(state, payload) {
@@ -45,15 +46,22 @@ export default createStore({
 
         setPreviewCard(state, card) {
             state.previewCard = card;
+        },
+
+        setLoading(state, value) {
+            state.loading = value;
         }
     },
     actions: {
         async loadCards({commit}, query) {
             try {
+                commit('setLoading', true);
                 const cards = await loadAllCards(query);
                 commit('cardsLoaded', cards.data);
             } catch(e) {
                 console.log(e);
+            } finally {
+                commit('setLoading', false);
             }
         },
         addCardToDeck({state, commit}, card) {
@@ -67,6 +75,7 @@ export default createStore({
         },
         async save({state, commit}, name) {
             try {
+                commit('setLoading', true);
                 const data = {
                     name,
                     game: 'WS',
@@ -76,15 +85,20 @@ export default createStore({
                 commit('deckSaved', resp.data);
             } catch(e) {
                 console.log(e);
+            } finally {
+                commit('setLoading', false);
             }
         },
 
         async loadDeckCards({commit}, code) {
             try {
+                commit('setLoading', true);
                 const cards = await loadDeck(code);
                 commit('deckLoaded', cards.data);
             } catch(e) {
                 console.log(e);
+            } finally {
+                commit('setLoading', false);
             }
         }
     },

@@ -6,13 +6,13 @@
         </div>
         <div class="flex w-full container mx-auto">
             <CardList 
-                content-display="lg-card m-5 lg:lg-card bg-black rounded-lg" 
+                content-display="w-1/2 p-1 md:p-3 md:w-1/3 lg:p-6 lg:w-1/3 rounded-lg" 
                 card-controls="" 
                 :cards="cards" 
-                class="w-full flex flex-wrap justify-center lg:justify-left lg:w-3/4 p-2"
+                class="w-full flex flex-wrap items-center lg:justify-left lg:w-2/3 p-2"
                 :get-copies="getCopies"
             />
-            <div class="hidden lg:block lg:w-1/4 h-64 sticky top-custom flex flex-col ">
+            <div class="hidden lg:block lg:w-1/3 h-64 sticky top-custom flex flex-col ">
                 <div class="flex justify-between p-1 bg-gray-200 p-2 mb-2 rounded-lg">
                     <input v-model="deckTitle" type="text" 
                     class="text-base p-1 rounded focus:outline-none" placeholder="Enter deck name...">

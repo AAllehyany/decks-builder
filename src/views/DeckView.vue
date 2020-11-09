@@ -1,8 +1,12 @@
 <template>
-    <div class="container flex mx-auto w-full justify-start">
-        <CardList 
-            :cards="makeUnique(deck.cards)" class="deck-container flex flex-wrap justify-start lg:lg-deck-container lg:bg-gray-200" 
-            content-display="sm-card lg:lg-card"
+    <div class="container flex mx-auto w-full flex-col justify-start">
+        <div class="w-full flex mb-2">
+            <h3 class="text-lg font-bold p-3">{{deck.name}}</h3>
+        </div>
+        <CardDetails v-if="previewCard !== null" />
+        <DeckCardList 
+            :cards="makeUnique(deck.cards)" class="flex flex-wrap justify-start items-center w-full" 
+            content-display="w-1/2 p-1 md:p-3 md:w-1/4 lg:p-2 lg:w-1/6 xl:p-3 rounded-lg"
             :get-copies="getCopies"
         />
     </div>
@@ -11,16 +15,17 @@
 <script>
 import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex'
-import CardList from '../components/CardList';
-
+import DeckCardList from '../components/DeckCardList';
+import CardDetails from '../components/CardDetails';
 export default {
     props: {
         code: String
     },
-    components: {CardList},
+    components: {DeckCardList, CardDetails},
     setup(props) {
         const store = useStore();
         const deck = computed(() => store.state.deckInfo);
+        const previewCard = computed(() => store.state.previewCard);
         onMounted(async () => {
             await store.dispatch('loadDeckCards', props.code);
         });
@@ -42,10 +47,13 @@ export default {
             return Object.values(uni);
         }
 
+        console.log(deck.value);
+
         return {
             deck,
             getCopies,
-            makeUnique
+            makeUnique,
+            previewCard
         }
     }
 }
