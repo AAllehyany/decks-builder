@@ -1,6 +1,6 @@
 <template>
     <div class="group relative">
-        <img :src="card.image_url" class="transition duration-100 w-full h-full rounded-lg transform group-hover:scale-102 hover:scale-102"  @click="previewCard"/>
+        <img :src="card.image_url" class="transition duration-100 w-full h-full rounded-lg transform group-hover:scale-110 hover:scale-102"  @click="toggleControls"/>
         <div v-if="state && controls" class="absolute flex justify-between w-full bottom-0 left-0 py-1 px-3 items-center">
             <div class="flex justify-between">
                 <span class="bg-white p-0 mr-1 h-8 w-8 rounded-full">
@@ -14,8 +14,13 @@
                     </svg>
                 </span>
             </div>
-            <span class="py-2 px-3 bg-black text-white text-lg font-bold cursor-pointer rounded-md" @click="addCopy">{{copies}}</span>
+            <span class="py-2 px-3 bg-black text-white text-lg font-bold cursor-pointer rounded-md" @click="addCopy">{{copies}} / 4</span>
         </div>
+        <span v-if="controls && state" class="bg-white p-0 m-0 h-8 w-8 rounded-full absolute top-0 right-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="w-8 h-8 fill-current text-yellow-600 cursor-pointer" @click="previewCard">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+        </span>
         <div v-if="!controls" class="absolute flex bottom-0 right-0">
             <span class="py-2 px-3 bg-black text-white text-lg font-bold cursor-pointer rounded-full">{{copies}}</span>
         </div>
@@ -71,6 +76,6 @@ export default {
 </script>
 <style scoped>
 .card-controls {
-    width: 90%;
+    width: 100%;
 }
 </style>
