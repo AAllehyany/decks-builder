@@ -9,14 +9,14 @@
                     class="rounded appearance-none text-gray-800 text-sm py-1 px-3 border border-1 border-teal-400 focus:outline-none" id="name">
             </div>
             <div class="mr-4 flex items-center">
-                <select v-model="form.card_type" id="card_type" class="text-sm block bg-white border border-teal-400 hover:border-teal-500 px-3 py-1 rounded focus:outline-none">
+                <select v-model="form.card_type" id="card_type" class="text-sm w-20  block bg-white border border-teal-400 hover:border-teal-500 px-3 py-1 rounded focus:outline-none">
                     <option value="">choose type..</option>
                     <option value="0">Character</option>
                     <option value="1">Event</option>
                     <option value="2">Climax</option>
                 </select>
             </div><div class="mr-4 flex items-center">
-                <select v-model="form.color" id="card_color" class="text-sm block bg-white border border-teal-400 hover:border-teal-500 px-3 py-1 rounded focus:outline-none">
+                <select v-model="form.color" id="card_color" class="text-sm w-20 block bg-white border border-teal-400 hover:border-teal-500 px-3 py-1 rounded focus:outline-none">
                     <option value="">choose color..</option>
                     <option value="1">Yellow</option>
                     <option value="2">Green</option>
@@ -61,21 +61,24 @@
     </div>
 </template>
 <script>
-import {reactive} from 'vue';
-import { useStore } from 'vuex';
+import { toRefs } from 'vue';
 
 export default {
-    setup() {
-        const store = useStore();
-        const form = reactive({});
+    props: {
+        onSearch: Function,
+        searchQuery: Object
+
+    },
+    setup(props) {
+        const {searchQuery} = toRefs(props);
         const onSubmit = async(e) => {
             e.preventDefault();
-            await store.dispatch('loadCards', form);
+            await props.onSearch();
         }
 
         return {
-            form,
-            onSubmit
+            onSubmit,
+            form: searchQuery
         }
     }
 }
