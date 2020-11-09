@@ -1,8 +1,15 @@
 <template>
-    <div class="flex mx-auto flex-wrap justify-center p-2">
+    <div class="flex mx-auto flex-wrap flex-col lg:flex-row justify-center p-2">
         <CardDetails v-if="previewCard !== null" />
-        <div class="hidden lg:block w-full flex sticky top-0 z-10 mb-2">
+        <div class="w-full flex lg:sticky top-0 z-10 mb-2">
             <CardSearch class="rounded-lg" :on-search="searchCards" :search-query="searchQuery" />
+        </div>
+        <div class="block lg:hidden w-full sticky top-0 flex justify-between p-1 bg-gray-200 p-2 mb-2 rounded-lg z-10">
+            <input v-model="deckTitle" type="text" 
+            class="text-base p-1 rounded focus:outline-none" placeholder="Enter deck name...">
+            <button @click="saveDeck" class="text-base text-white block bg-white bg-green-400 hover:bg-green-500 px-3 py-1 rounded focus:outline-none">
+                save
+            </button>
         </div>
         <div class="flex w-full container mx-auto">
             <CardList 
@@ -28,7 +35,7 @@
 </template>
 
 <script>
-import {computed, onBeforeMount, reactive, ref, toRefs} from 'vue';
+import {computed, onBeforeMount, onMounted, reactive, ref, toRefs} from 'vue';
 import CardList from '../components/CardList';
 import CardSearch from '../components/CardSearch';
 import DeckList from '../components/DeckList'
@@ -58,6 +65,18 @@ export default {
         const currentPage = ref(0);
         const searchQuery = reactive({});
 
+        const scroll = () => {
+            window.onscroll= async () => {
+                let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+
+                if (bottomOfWindow && store.state.canLoadMore) {
+                    searchQuery.skip = currentPage.value + 1;
+                    currentPage.value += 1;
+                    await store.dispatch('loadMore', searchQuery);
+                }
+            }
+        }
+
         onBeforeMount(async () => {
             loading.value = true;
             try {
@@ -71,6 +90,10 @@ export default {
                 loading.value = false;
             }
         });
+
+        onMounted(() => {
+            scroll();
+        })
 
         const saveDeck = async () => {
             console.log(deckTitle.value)
@@ -115,26 +138,6 @@ export default {
 <style>
 @layer utilities {
     @responsive {
-        .search-results {
-            height: 550px;
-            scrollbar-width: 10px;
-            scrollbar-color: #2f3030 transparent;
-        }
-
-        .search-results::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .search-results::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .search-results::-webkit-scrollbar-thumb {
-            background-color: #2f3030;
-            border-radius: 20px;
-            border: 1px solid #000;
-        }
-
         .card {
             width: 200px;
             max-height: 279px;
