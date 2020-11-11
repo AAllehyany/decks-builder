@@ -1,7 +1,9 @@
 <template>
-    <div class="h-48 bg-gray-800 w-56 items-center justify-center flex">
-        <router-link :to="{path: '/create', query: {c: game.code}}" class="text-white p-0 font-bold text-lg uppercase">{{game.title}}</router-link>
-    </div>
+    <router-link :to="{path: '/create', query: {c: game.code}}"  class="h-16 border border-gray-800 hover:bg-gray-300 cursor-pointer w-full max-w-sm items-center justify-center flex">
+        <span class="text-gray-800 p-0 font-bold text-xl">
+            {{game.title}}
+        </span>
+    </router-link>
 </template>
 <script>
 export default {
