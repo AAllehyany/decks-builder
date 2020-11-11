@@ -7,7 +7,7 @@
         <CardDetails v-if="previewCard !== null" />
         <DeckCardList 
             :cards="makeUnique(deck.cards)" class="flex flex-wrap justify-start items-center w-full" 
-            content-display="w-1/2 p-1 md:p-3 md:w-1/4 lg:p-2 lg:w-1/6 xl:p-3 rounded-lg"
+            content-display="deck-card rounded-lg m-3"
             :get-copies="getCopies"
         />
     </div>
@@ -80,6 +80,11 @@ export default {
             height: 209.25px;
             margin-right: 5px;
             margin-bottom: 5px;
+        }
+
+        .deck-card {
+            width: 150px;
+            max-height: 209px;
         }
 
 

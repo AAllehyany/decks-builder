@@ -22,6 +22,7 @@ export default {
 
 
         function previewCard() {
+            document.body.classList.add('modal-open')
             store.commit('setPreviewCard', card.value);
         }
 

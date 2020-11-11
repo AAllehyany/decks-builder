@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = 'http://localhost:3000/decks';
+const URL = 'http://localhost:5000/decks';
 
 export const validAdd = (deck, card) => {
     const deckToBe = deck.concat([card]);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = 'http://localhost:3000/cards';
+const URL = 'http://localhost:5000/cards';
 
 
 export const loadAllCards = async (query) => {

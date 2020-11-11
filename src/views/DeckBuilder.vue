@@ -1,26 +1,26 @@
 <template>
-    <div class="flex mx-auto flex-wrap flex-col lg:flex-row justify-center p-2">
+    <div class="flex mx-auto flex-wrap flex-col lg:flex-row justify-center">
         <CardDetails v-if="previewCard !== null" />
         <div class="w-full flex lg:sticky top-0 z-10 mb-2">
-            <CardSearch class="rounded-lg" :on-search="searchCards" :search-query="searchQuery" />
+            <CardSearch :on-search="searchCards" :search-query="searchQuery" />
         </div>
-        <div class="block lg:hidden w-full sticky top-0 flex justify-between p-1 bg-gray-200 p-2 mb-2 rounded-lg z-10">
+        <div class="block lg:hidden w-full sticky top-0 flex justify-between p-1 bg-gray-800 p-2 mb-2 z-10">
             <input v-model="deckTitle" type="text" 
             class="text-base p-1 rounded focus:outline-none" placeholder="Enter deck name...">
             <button @click="saveDeck" class="text-base text-white block bg-white bg-green-400 hover:bg-green-500 px-3 py-1 rounded focus:outline-none">
                 save
             </button>
         </div>
-        <div class="flex w-full container mx-auto">
+        <div class="flex w-full">
             <CardList 
-                content-display="w-1/2 p-1 md:p-3 md:w-1/3 lg:p-6 lg:w-1/3 rounded-lg" 
+                content-display="w-1/2 p-1 md:p-3 md:w-1/4 lg:p-6 lg:w-1/4 xl:w-1/6" 
                 card-controls="" 
                 :cards="cards" 
-                class="w-full flex flex-wrap items-center lg:justify-left lg:w-2/3 p-2"
+                class="w-full flex flex-wrap items-center lg:justify-left lg:w-4/5 p-2"
                 :get-copies="getCopies"
             />
-            <div class="hidden lg:block lg:w-1/3 h-64 sticky top-custom flex flex-col ">
-                <div class="flex justify-between p-1 bg-gray-200 p-2 mb-2 rounded-lg">
+            <div class="hidden lg:block lg:w-1/5 h-64 sticky top-custom flex flex-col ">
+                <div class="flex justify-between p-1 bg-gray-800 p-2 mb-2">
                     <input v-model="deckTitle" type="text" 
                     class="text-base p-1 rounded focus:outline-none" placeholder="Enter deck name...">
                     <button @click="saveDeck" class="text-base text-white block bg-white bg-green-400 hover:bg-green-500 px-3 py-1 rounded focus:outline-none">
@@ -112,8 +112,9 @@ export default {
         const searchCards = async () => {
             loading.value = true;
             try {
-                await store.dispatch('loadCards', searchQuery);
                 currentPage.value = 0;
+                searchQuery.skip = 0;
+                await store.dispatch('loadCards', searchQuery);
             } catch(e) {
                 console.log(e);
             } finally {
