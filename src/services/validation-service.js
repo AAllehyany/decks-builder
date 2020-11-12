@@ -3,7 +3,7 @@ const URL = 'https://decks-builder.com/decks';
 
 export const validAdd = (deck, card) => {
     const deckToBe = deck.concat([card]);
-    return (deckToBe.length <= 50) && validateWeissDeck(deckToBe);
+    return true || (deckToBe.length <= 50) && validateWeissDeck(deckToBe);
 }
 
 
