@@ -1,15 +1,27 @@
 <template>
-    <div class="container flex mx-auto w-full flex-col justify-start">
-        <div class="w-full flex flex-col mb-2 justify-center">
-            <h3 class="text-lg font-bold p-3">{{deck.name}}</h3>
-            <p class="text-base font-bold px-5">Code: {{deck.code}}</p>
-        </div>
+    <div class="container mx-auto ">
         <CardDetails v-if="previewCard !== null" />
-        <DeckCardList 
-            :cards="makeUnique(deck.cards)" class="flex flex-wrap justify-start items-center w-full" 
-            content-display="deck-card rounded-lg m-3"
-            :get-copies="getCopies"
-        />
+        <div class="flex justify-center">
+            <div class="flex w-full max-w-screen-md flex-col">
+                <div class="flex justify-between bg-gray-900 p-2 items-center">
+                    <span class="text-gray-200 text-base">{{deck.name}}</span>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current text-yellow-500 w-4 h-4 mr-2">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="text-gray-200 text-base">{{deck.code}}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current text-yellow-500 w-4 h-4 ml-2">
+                            <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+                <DeckCardList 
+                    :cards="sorted" class="items-center p-1 bg-gray-700" 
+                    :get-copies="getCopies"
+                />
+            </div>
+        </div>
+        
     </div>
 </template>
 
@@ -39,7 +51,7 @@ export default {
         const makeUnique = (cards) => {
             if(cards === undefined) return;
             const uni = cards.reduce((p, c) => {
-                const name = c.name;
+                const name = c._id;
                 if(p[name] === undefined) {
                     p[name] = c;
                 }
@@ -48,13 +60,18 @@ export default {
             return Object.values(uni);
         }
 
-        console.log(deck.value);
+        const sorted = computed(() => {
+            if(store.state.deckInfo.cards === undefined) return [];
+            const cards = store.state.deckInfo.cards;
+            return [...cards].sort((a,b) => a.card_type - b.card_type);
+        })
 
         return {
             deck,
             getCopies,
             makeUnique,
-            previewCard
+            previewCard,
+            sorted
         }
     }
 }

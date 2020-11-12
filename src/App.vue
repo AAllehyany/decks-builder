@@ -14,20 +14,23 @@
     </header> -->
     <router-view />
     <div class="fixed top-0 left-0 bg-gray-300 opacity-25 w-full h-full" v-if="isLoading"></div>
+    <!-- <Toast v-if="appError" :clickAction="closeToast" :item="errorState || {}" /> -->
 </div>
 </template>
 <script>
 import { computed } from 'vue';
-import { useStore } from 'vuex'
+import { useStore } from 'vuex';
+// import Toast from './components/Toast.vue';
+
 export default {
+    components: {
+        // Toast
+    },
     setup() {
         const store = useStore();
-
         const isLoading = computed( () => store.state.loading);
-
-
         return {
-            isLoading
+            isLoading,
         }
 
 

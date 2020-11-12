@@ -1,6 +1,14 @@
 <template>
-    <div class="flex mx-auto flex-wrap flex-col lg:flex-row justify-center">
+    <div class="flex flex-wrap flex-col justify-center">
         <CardDetails v-if="previewCard !== null" />
+        <DeckBuilderMeta :deck="deck" class="sticky top-0 z-10"/>
+        <CardSearch :on-search="searchCards" :search-query="searchQuery" class="container mx-auto" />
+        <DeckPreview :deck="deckCards" v-if="previewDeck"/>
+        <div class="flex container mx-auto">
+            <SearchList :cards="cards" class="w-full lg:w-3/5"/>
+        </div>
+    </div>
+        <!-- <CardDetails v-if="previewCard !== null" />
         <div class="w-full flex lg:sticky top-0 z-10 mb-2">
             <CardSearch :on-search="searchCards" :search-query="searchQuery" />
         </div>
@@ -11,9 +19,9 @@
                 save
             </button>
         </div>
-        <div class="flex w-full">
+        <div class="flex w-full container mx-auto">
             <CardList 
-                content-display="w-1/2 p-1 md:p-3 md:w-1/4 lg:p-6 lg:w-1/4 xl:w-1/6" 
+                content-display="w-1/2 p-1 md:p-3 md:w-1/4 lg:p-6 lg:w-1/4" 
                 card-controls="" 
                 :cards="cards" 
                 class="w-full flex flex-wrap items-center lg:justify-left lg:w-4/5 p-2"
@@ -31,14 +39,17 @@
             </div>
         </div>
         
-    </div>
+    </div> -->
 </template>
 
 <script>
 import {computed, onBeforeMount, onMounted, reactive, ref, toRefs} from 'vue';
-import CardList from '../components/CardList';
+import SearchList from '../components/SearchList';
+// import CardList from '../components/CardList';
 import CardSearch from '../components/CardSearch';
-import DeckList from '../components/DeckList'
+import DeckBuilderMeta from '../components/DeckBuilderMeta';
+import DeckPreview from '../components/DeckPreview';
+// import DeckList from '../components/DeckList'
 import CardDetails from '../components/CardDetails';
 import {useStore} from 'vuex';
 import {useRouter} from 'vue-router';
@@ -48,10 +59,13 @@ export default {
         game: String
     },
     components: {
-        CardList,
-        DeckList,
+        // CardList,
+        // DeckList,
         CardSearch,
-        CardDetails
+        CardDetails,
+        DeckBuilderMeta,
+        SearchList,
+        DeckPreview
     },
     setup(props) {
         const {game} = toRefs(props);
@@ -64,6 +78,7 @@ export default {
         const previewCard = computed(() => store.state.previewCard);
         const currentPage = ref(0);
         const searchQuery = reactive({});
+        const previewDeck = computed(() => store.state.previewDeck);
 
         const scroll = () => {
             window.onscroll= async () => {
@@ -96,18 +111,25 @@ export default {
         })
 
         const saveDeck = async () => {
-            console.log(deckTitle.value)
             try {
                 await store.dispatch('save', deckTitle.value);
                 router.push({name: 'ViewDeck', params: {code: store.state.deckCode}});
             } catch(e) {
-                console.log("ERRORRRR", e);
+                store.commit('errorState', {message: e.message});
             }
         }
 
-        const getCopies = (card) => {
-            return store.state.currentDeck.filter(c => c._id === card._id).length
-        }
+        const deckCards = computed(() => {
+            const set = new Set();
+            return deck.value.reduce((res,card) => {
+                if(!set.has(card._id)) {
+                    set.add(card._id, card);
+                    res.push(card)
+                }
+
+                return res
+            }, []);
+        });
 
         const searchCards = async () => {
             loading.value = true;
@@ -127,11 +149,12 @@ export default {
             deck,
             saveDeck,
             deckTitle,
-            getCopies,
             loading,
             previewCard,
             searchCards,
-            searchQuery
+            searchQuery,
+            deckCards,
+            previewDeck
         }
   }
 }

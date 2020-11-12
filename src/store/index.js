@@ -7,7 +7,7 @@ export default createStore({
         searchResults: [],
         searchFilters: {},
         maxCopies: 4,
-        errorMsgs: {},
+        errorMsg: null,
         currentDeck: [],
         cardError: {},
         deckInfo: {},
@@ -15,6 +15,7 @@ export default createStore({
         previewCard: null,
         loading: false,
         canLoadMore: true,
+        previewDeck: false,
     },
     mutations: {
         cardsLoaded(state, payload) {
@@ -26,7 +27,13 @@ export default createStore({
         },
 
         errorState(state, payload) {
-            state.errorMsgs = payload;
+            //state.hasError = true;
+            state.errorMsg = payload;
+        },
+
+        clearError(state) {
+            state.hasError = false;
+            state.errorMsg = null;
         },
 
         cardAddedToDeck(state, payload) {
@@ -59,6 +66,15 @@ export default createStore({
 
         setCanLoad(state, value) {
             state.canLoadMore = value;
+        },
+
+        setPreviewDeck(state, value) {
+            state.previewDeck =value;
+        },
+
+        resetBuilder(state) {
+            state.currentDeck = [];
+            state.deckCode = '';
         }
 
     },
@@ -70,7 +86,13 @@ export default createStore({
                 const cards = await loadAllCards(query);
                 commit('cardsLoaded', cards.data);
             } catch(e) {
-                console.log(e);
+                if(e.response) {
+                    commit('errorState', e.response.data);
+                } else if(e.request) {
+                    commit('errorState', {message: 'Network error!!'});
+                } else {
+                    console.log(e);
+                }
             } finally {
                 commit('setLoading', false);
             }
@@ -85,7 +107,13 @@ export default createStore({
                     commit('addCardsToResult', cards.data);
                 }
             } catch(e) {
-                console.log(e);
+                if(e.response) {
+                    commit('errorState', e.response.data);
+                } else if(e.request) {
+                    commit('errorState', {message: 'Network error!!'});
+                } else {
+                    console.log(e);
+                }
             } finally {
                 commit('setLoading', false);
             }
@@ -110,7 +138,13 @@ export default createStore({
                 const resp = await saveDeck(data);
                 commit('deckSaved', resp.data);
             } catch(e) {
-                console.log(e);
+                if(e.response) {
+                    commit('errorState', e.response.data);
+                } else if (e.request) {
+                    commit('errorState', {message: 'Network error'})
+                } else {
+                    console.log(e);
+                }
             } finally {
                 commit('setLoading', false);
             }
@@ -122,7 +156,13 @@ export default createStore({
                 const cards = await loadDeck(code);
                 commit('deckLoaded', cards.data);
             } catch(e) {
-                console.log(e);
+                if(e.response) {
+                    commit('errorState', e.response.data);
+                } else if(e.request) {
+                    commit('errorState', {message: 'Network error!!'});
+                } else {
+                    console.log(e);
+                }
             } finally {
                 commit('setLoading', false);
             }

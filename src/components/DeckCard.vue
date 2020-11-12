@@ -1,24 +1,24 @@
 <template>
     <div class="group relative">
-        <img :src="card.image_url" class="w-full h-auto rounded-lg"  @click="previewCard"/>
-        <div class="absolute flex w-full justify-center bottom-0 right-0">
-            <span class="py-2 px-5 bg-black text-white text-sm font-bold cursor-pointer rounded-md">{{copies}}</span>
-        </div>
+        <img :src="card.image_url" class="w-full h-auto"  @click="previewCard"/>
+        <!-- <div class="absolute flex w-full justify-end bottom-0 right-0">
+            <span class="px-5 py-1 bg-black text-white text-base  rounded">{{copies}}</span>
+        </div> -->
     </div>
 </template>
 <script>
-import {toRefs} from 'vue';
+import {computed, toRefs} from 'vue';
 import {useStore} from 'vuex';
 
 export default {
     props: {
         card: Object,
-        copies: Number,
         previewAction: Function
     },
     setup(props) {
         const store = useStore();
         const {card} = toRefs(props);
+        const copies = computed(() => store.state.deckInfo.cards.filter(c => c._id === card.value._id).length)
 
 
         function previewCard() {
@@ -28,6 +28,7 @@ export default {
 
         return {
             previewCard,
+            copies
         }
     }
 }

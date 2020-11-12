@@ -1,11 +1,10 @@
 <template>
-    <div>
+    <div class="grid grid-cols-5 md:grid-cols-10 gap-1 w-full">
         <DeckCard 
-            :class="contentDisplay" 
+            
             v-for="card in cards" 
             :card="card" 
-            :key="card._id" 
-            :copies="getCopies(card)" />
+            :key="card._id"  />
     </div>
 </template>
 <script>
@@ -14,8 +13,6 @@ export default {
     components: {DeckCard},
     props: {
         cards: Array,
-        contentDisplay: String,
-        getCopies: Function
     }
 }
 </script>
