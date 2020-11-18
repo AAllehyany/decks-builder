@@ -80,8 +80,8 @@
     </div>
 </template>
 <script>
-import { onBeforeMount, toRefs, ref } from 'vue';
-import axios from 'axios';
+import { toRefs } from 'vue';
+// import axios from 'axios';
 
 export default {
     props: {
