@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = 'http://localhost:3000/cards';
+const URL = 'https://decks-builder.com/cards';
 
 
 export const loadAllCards = async (query) => {
