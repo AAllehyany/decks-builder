@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-5 md:grid-cols-10 gap-1 w-full">
+    <div class="grid grid-cols-3 sm:grid-cols-5 gap-1 w-full">
         <DeckCard 
             
             v-for="card in cards" 

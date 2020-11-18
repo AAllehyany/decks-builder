@@ -1,17 +1,17 @@
 <template>
 <div id="app" class="select-none">
-    <!-- <header class="px-3 h-10 flex mb-3">
+    <header class="px-3 h-16 flex mb-3 bg-gray-800 shadow-md">
     <div class="w-full flex mx-auto justify-between items-center">
         <div>
-        <h1 class="text-gray-800 text-lg uppercase font-bold">deck maker</h1>
+        <h1 class="text-gray-300 text-lg uppercase font-bold">deck maker</h1>
         </div>
-        <div>
+        <!-- <div>
         <input type="search" 
             class=" w-40 p-1 bg-transparent text-gray-800 focus:outline-none hover:outline-none border-solid border-b border-b-1 border-gray-800" 
             placeholder="enter deck code..." /> 
-        </div>
+        </div> -->
     </div>
-    </header> -->
+    </header>
     <router-view />
     <div class="fixed top-0 left-0 bg-gray-300 opacity-25 w-full h-full" v-if="isLoading"></div>
     <!-- <Toast v-if="appError" :clickAction="closeToast" :item="errorState || {}" /> -->

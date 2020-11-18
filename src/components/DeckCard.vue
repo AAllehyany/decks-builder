@@ -1,9 +1,9 @@
 <template>
     <div class="group relative">
         <img :src="card.image_url" class="w-full h-auto"  @click="previewCard"/>
-        <!-- <div class="absolute flex w-full justify-end bottom-0 right-0">
-            <span class="px-5 py-1 bg-black text-white text-base  rounded">{{copies}}</span>
-        </div> -->
+        <div class="absolute flex w-full justify-end bottom-0 right-0">
+            <span class="p-1 bg-black text-white text-base  rounded-full flex items-center w-6 h-6 justify-center">{{copies}}</span>
+        </div>
     </div>
 </template>
 <script>

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import {loadAllCards} from '../services/card-service';
+import { getGameAndForm } from '../services/game-service';
 import {validAdd, saveDeck, loadDeck} from '../services/validation-service';
 
 export default createStore({
@@ -16,6 +17,7 @@ export default createStore({
         loading: false,
         canLoadMore: true,
         previewDeck: false,
+        currentGame: null
     },
     mutations: {
         cardsLoaded(state, payload) {
@@ -75,6 +77,10 @@ export default createStore({
         resetBuilder(state) {
             state.currentDeck = [];
             state.deckCode = '';
+        },
+
+        setGameAndForm(state, payload) {
+            state.currentGame = payload;
         }
 
     },
@@ -155,6 +161,24 @@ export default createStore({
                 commit('setLoading', true);
                 const cards = await loadDeck(code);
                 commit('deckLoaded', cards.data);
+            } catch(e) {
+                if(e.response) {
+                    commit('errorState', e.response.data);
+                } else if(e.request) {
+                    commit('errorState', {message: 'Network error!!'});
+                } else {
+                    console.log(e);
+                }
+            } finally {
+                commit('setLoading', false);
+            }
+        },
+
+        async loadGameAndForm({commit}, code) {
+            try {
+                commit('setLoading', true);
+                const game = await getGameAndForm(code);
+                commit('setGameAndForm', game.data);
             } catch(e) {
                 if(e.response) {
                     commit('errorState', e.response.data);

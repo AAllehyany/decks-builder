@@ -64,6 +64,15 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="flex mb-4">
+                <div class="mr-3">
+                    <label for="title_code" class="block text-xs text-gray-900 px-1">Anime/Title:</label>
+                    <select v-model="form.title_code" id="color" class="text-sm w-48  block bg-white border border-gray-600 p-2 focus:outline-none">
+                        <option value="">choose color..</option>
+                        <option v-for="(title, i) in titles" :key="i" :value="title.codes">{{title.title}}</option>
+                    </select>
+                </div>
+            </div> -->
             
             <button class="appearance-none py-3 w-full lg:py-2 lg:w-20 bg-blue-500 text-lg text-white mr-3">search</button>
 
@@ -71,7 +80,8 @@
     </div>
 </template>
 <script>
-import { toRefs } from 'vue';
+import { onBeforeMount, toRefs, ref } from 'vue';
+import axios from 'axios';
 
 export default {
     props: {
@@ -81,6 +91,18 @@ export default {
     },
     setup(props) {
         const {searchQuery} = toRefs(props);
+        // const titles = ref([]);
+        
+        // onBeforeMount(async () => {
+        //     try {
+        //         const {data} = await axios.get('http://localhost:3000/titles');
+        //         titles.value = data.map((e) => ({title: e.name, codes: e.title_codes.join(',')}));
+        //     }catch(e) {
+        //         console.log("TITLE ERROR", e);
+        //     }
+
+        // });
+
         const onSubmit = async(e) => {
             e.preventDefault();
             await props.onSearch();
@@ -88,7 +110,8 @@ export default {
 
         return {
             onSubmit,
-            form: searchQuery
+            form: searchQuery,
+            //titles
         }
     }
 }

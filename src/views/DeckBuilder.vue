@@ -73,6 +73,7 @@ export default {
         const router = useRouter();
         const cards = computed(() => store.state.searchResults);
         const deck = computed(() => store.state.currentDeck);
+        //const currentGame = computed(() => store.state.currentGame);
         const deckTitle = ref('');
         const loading = ref(false);
         const previewCard = computed(() => store.state.previewCard);
@@ -95,6 +96,8 @@ export default {
         onBeforeMount(async () => {
             loading.value = true;
             try {
+                await store.dispatch('loadGameAndForm', game.value);
+                console.log(store.state.currentGame);
                 await store.dispatch('loadCards', {
                     game: game.value,
                     skip: currentPage.value,
